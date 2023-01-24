@@ -13,8 +13,7 @@ const RequireAnswer = input => input.trim();
 function CreateHTML() {
     let htmlOutput = ``;
     //create top part of generic html page
-    htmlOutput += `
-<!DOCTYPE html>
+    htmlOutput += `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -41,6 +40,60 @@ function CreateHTML() {
 </body>
 </html>`;
     return htmlOutput;
+}
+
+function CreateCSS() {
+    return `:root {
+    --primarycolor:blue;
+    --primarycolortext:white;
+    --textcolor:black;
+    --secondarycolor:orange;
+    --backingcolor:lightgray;
+}
+* {
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+body {
+    background-color:var(--backingcolor);
+}
+header {
+    background-color:var(--primarycolor);
+    color:var(--primarycolortext);
+    text-align:center;
+    padding:30px 0;
+}    
+main {
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+h2, h3 {
+    margin:5px;
+}
+.card {
+    transition:transform 0.5s;
+    padding:10px;
+    margin:20px;
+    width:250px;
+    box-shadow:5px 5px 5px 5px var(--secondarycolor);
+    background-color:var(--primarycolor);
+    color:var(--primarycolortext);
+}
+.card .infoarea {
+    padding:30px 12px;
+    background-color: var(--backingcolor);
+    color:var(--textcolor);
+}
+.card .infoarea p {
+    margin:2px;
+    padding:3px;
+    border:2px solid var(--secondarycolor);
+}
+.card:hover {
+    transform:scale(110%);
+}`;
 }
 
 //prompt user with sequence of questions getting data for a new employee to add to our data
@@ -102,7 +155,12 @@ function DisplayMenu() {
             GetEmployeeInfo('intern');
         } else {
             //user has selected no more input, wrap up
-            fileStream.writeFile('teamprofiles.html',CreateHTML(),function(err) {
+            fileStream.writeFile('./dist/profiles.html',CreateHTML(),function(err) {
+                if(err) {
+                    throw err;
+                }
+            });
+            fileStream.writeFile('./dist/style.css',CreateCSS(),function(err) {
                 if(err) {
                     throw err;
                 }
