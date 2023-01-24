@@ -32,7 +32,7 @@ function CreateHTML() {
 
     //pass each employee into a function that generates a card displaying them
     for(let i = 0; i < team.length; i++) {
-        team[i].generateHTMLCard();
+        htmlOutput += team[i].generateHTMLCard();
     }
 
     //create bottom part of generic html page
@@ -103,7 +103,9 @@ function DisplayMenu() {
         } else {
             //user has selected no more input, wrap up
             fileStream.writeFile('teamprofiles.html',CreateHTML(),function(err) {
-                throw err;
+                if(err) {
+                    throw err;
+                }
             });
         }
     })
